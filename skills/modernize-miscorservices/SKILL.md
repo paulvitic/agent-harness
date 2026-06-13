@@ -59,10 +59,12 @@ Use the bundled templates for output shape and the reference files for the quali
 This skill sits in the middle of a staged modernization workflow.
 
 - `acquire-codebase-knowledge` — prerequisite companion skill. Use it first to populate the required seven-file baseline in `docs/codebase/`.
-- Future DDD tactical design skill — downstream companion skill. Use it after use cases and event-storming diagrams exist in `docs/codebase/use-cases/` to define aggregates, value objects, domain services, repositories, and boundaries.
-- Future hexagonal architecture implementation skill — downstream companion skill. Use it after the domain model is clear to guide ports, adapters, package structure, and modernization code changes.
+- Planned DDD skill family — downstream companion skills. Use them after use cases and event-storming diagrams exist in `docs/codebase/use-cases/` to define foundations, aggregates, value objects, services, repositories, and domain events.
+- Planned hexagonal implementation skill — downstream companion skill. Use it after the domain model is clear to guide ports, adapters, package structure, and modernization code changes.
 
 Companion skills help sequence the workflow, but they do not affect automatic skill discovery. Triggering still depends on this skill's frontmatter description.
+
+See [the DDD skill roadmap](./references/ddd-skill-roadmap.md) for the intended downstream skill split and the external source material that informs it.
 
 ## Step-by-Step Workflows
 
@@ -144,6 +146,7 @@ Prefer side-by-side markdown and `.puml` files over a separate event-storming fo
 - [Knowledge normalization](./references/knowledge-normalization.md)
 - [Use-case extraction](./references/use-case-extraction.md)
 - [PlantUML event storming](./references/plantuml-event-storming.md)
+- [DDD skill roadmap](./references/ddd-skill-roadmap.md)
 
 ## Templates
 
