@@ -1,0 +1,19 @@
+@startuml event_storming_starter
+!include https://raw.githubusercontent.com/tmorin/plantuml-libs/master/distribution/eventstorming/single.puml
+
+Title("Example Event Storming Flow", "Replace with use-case subtitle")
+
+Person(primaryActor, "Primary Actor")
+Command(primaryCommand, "Business Command")
+Aggregate(targetAggregate, "Aggregate")
+DomainEvent(primaryEvent, "Domain Event")
+Policy(reactionPolicy, "Policy")
+ReadModel(outcomeView, "Outcome")
+
+primaryActor --> primaryCommand
+primaryCommand --> targetAggregate
+targetAggregate --> primaryEvent
+primaryEvent --> reactionPolicy
+reactionPolicy --> outcomeView
+
+@enduml

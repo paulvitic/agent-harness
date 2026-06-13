@@ -1,13 +1,14 @@
 ---
 name: modernize-miscorservices
-description: 'Workflow for documenting and modernizing legacy Quarkus Kotlin microservice codebases. Use when asked to analyze or modernize a Quarkus microservice system, populate docs/codebase first, identify business use cases, create PlantUML event-storming diagrams, and later prepare DDD tactical and hexagonal modernization work.'
+description: 'Workflow for documenting and modernizing legacy microservice codebases built with Quarkus and Kotlin. Use when asked to analyze or modernize a Quarkus Kotlin microservice system, populate docs/codebase first, identify business use cases, create PlantUML event-storming diagrams, and prepare architecture-led modernization.'
+license: Apache-2.0
 ---
 
 # Modernize legacy Quarkus Kotlin microservices through staged codebase knowledge, use-case discovery, and architecture-led modernization.
 
 ## When to Use This Skill
 
-- User wants to modernize a legacy Quarkus Kotlin microservice codebase.
+- User wants to modernize a legacy microservice codebase built with Quarkus and Kotlin.
 - User needs the current system documented before planning or rewriting code.
 - User wants business use cases extracted from source and represented as event-storming diagrams.
 - User wants modernization work to follow DDD tactical patterns and hexagonal architecture.
@@ -16,7 +17,7 @@ description: 'Workflow for documenting and modernizing legacy Quarkus Kotlin mic
 
 This skill has a hard prerequisite: the repository root must already contain `docs/codebase/` populated by the `acquire-codebase-knowledge` skill.
 
-Treat the upstream skill's output contract as mandatory baseline input. Before continuing, confirm that `docs/codebase/` contains exactly these required baseline documents:
+Treat the upstream skill's output contract as mandatory baseline input. Before continuing, confirm that `docs/codebase/` contains this seven-file baseline:
 
 - `STACK.md`
 - `STRUCTURE.md`
@@ -37,39 +38,28 @@ Do not invent missing architectural knowledge from sparse code reads when this p
 
 ## Expected Inputs
 
-- A legacy codebase using Quarkus and Kotlin.
+- A legacy microservice codebase built with Quarkus and Kotlin.
 - A microservice-oriented repository or multi-repository workspace.
-- A populated `docs/codebase/` folder containing the seven baseline documents from the upstream skill.
+- A populated `docs/codebase/` folder containing the seven-file baseline above.
 - Baseline documents whose claims are evidence-backed, with unknowns marked as `[TODO]` and intent-dependent gaps marked as `[ASK USER]`.
 
 ## Expected Documentation Outputs
 
-Preserve the upstream skill's seven baseline files as the source-of-truth documentation set in `docs/codebase/`:
-
-- `docs/codebase/STACK.md`
-- `docs/codebase/STRUCTURE.md`
-- `docs/codebase/ARCHITECTURE.md`
-- `docs/codebase/CONVENTIONS.md`
-- `docs/codebase/INTEGRATIONS.md`
-- `docs/codebase/TESTING.md`
-- `docs/codebase/CONCERNS.md`
-
-This skill may extend that baseline with additional downstream artifacts, but it should not redefine or replace the upstream contract.
+Preserve that seven-file baseline in `docs/codebase/` as the source-of-truth documentation set. This skill may extend it with downstream artifacts, but it should not redefine or replace the upstream contract.
 
 Additional outputs produced by this skill:
 
-- `docs/codebase/use-cases/` with one markdown file per identified business use case.
-- `docs/codebase/event-storming/` with one PlantUML diagram per significant use case or domain flow.
+- `docs/codebase/use-cases/` with one markdown file and one `.puml` file per identified business use case.
 - `docs/codebase/modernization-readiness.md` summarizing modernization constraints, bounded-context candidates, and migration seams.
 
-Use the reference files in this skill as the default structure and quality bar.
+Use the bundled templates for output shape and the reference files for the quality bar.
 
 ## Companion Skills
 
 This skill sits in the middle of a staged modernization workflow.
 
 - `acquire-codebase-knowledge` — prerequisite companion skill. Use it first to populate the required seven-file baseline in `docs/codebase/`.
-- Future DDD tactical design skill — downstream companion skill. Use it after use cases and event-storming diagrams exist to define aggregates, value objects, domain services, repositories, and boundaries.
+- Future DDD tactical design skill — downstream companion skill. Use it after use cases and event-storming diagrams exist in `docs/codebase/use-cases/` to define aggregates, value objects, domain services, repositories, and boundaries.
 - Future hexagonal architecture implementation skill — downstream companion skill. Use it after the domain model is clear to guide ports, adapters, package structure, and modernization code changes.
 
 Companion skills help sequence the workflow, but they do not affect automatic skill discovery. Triggering still depends on this skill's frontmatter description.
@@ -78,7 +68,7 @@ Companion skills help sequence the workflow, but they do not affect automatic sk
 
 ### Phase 1: Validate and normalize codebase knowledge
 
-1. Confirm that `docs/codebase/` exists and contains the seven required baseline files from the upstream skill.
+1. Confirm that `docs/codebase/` exists and contains the seven-file baseline.
 2. Review those baseline artifacts and identify obvious gaps in service inventory, domain language, integrations, data ownership, and runtime flows.
 3. Extend the existing knowledge into this skill's downstream artifacts without breaking the upstream file contract.
 4. Record assumptions explicitly instead of burying them inside summaries.
@@ -90,18 +80,18 @@ Use [knowledge normalization guidance](./references/knowledge-normalization.md) 
 1. Inspect the normalized codebase knowledge and source code to enumerate end-to-end business use cases.
 2. Group use cases by bounded context, upstream trigger, and observable outcome.
 3. Create one markdown document per use case under `docs/codebase/use-cases/`.
-4. Capture actors, commands, domain events, policies, aggregates, external systems, and failure paths.
+4. Keep the text brief and capture only the business goal, trigger, key commands and domain events, involved systems, and evidence.
 
-Use [use-case extraction guidance](./references/use-case-extraction.md) for the required structure.
+Start from [the use-case template](./templates/use-case.md) and use [use-case extraction guidance](./references/use-case-extraction.md) for the required structure.
 
 ### Phase 3: Create PlantUML event-storming diagrams
 
 1. For each significant use case, produce a PlantUML event-storming diagram.
 2. Model the sequence from trigger to domain outcome with explicit commands, events, policies, read models, and external systems.
 3. Keep the diagram focused on business flow, not infrastructure call stacks.
-4. Store each diagram under `docs/codebase/event-storming/`.
+4. Store each diagram next to its corresponding markdown file in `docs/codebase/use-cases/` using the same base name.
 
-Use [PlantUML event-storming guidance](./references/plantuml-event-storming.md) for conventions and a starter template.
+Start from [the PlantUML starter template](./templates/event-storming-starter.puml) and use [PlantUML event-storming guidance](./references/plantuml-event-storming.md) for conventions.
 
 ### Phase 4: Prepare modernization execution
 
@@ -110,7 +100,24 @@ Use [PlantUML event-storming guidance](./references/plantuml-event-storming.md) 
 3. Summarize candidate aggregates, ports, adapters, anti-corruption boundaries, and migration seams.
 4. Follow future skill references for DDD tactical design and hexagonal implementation rules when those instructions are added.
 
+Use [the modernization readiness template](./templates/modernization-readiness.md) for the phase 4 summary document.
+
 At this stage, branch creation is allowed, but implementation guidance is intentionally incomplete. If the user asks for code modernization before the later references exist, state that the documentation and branch setup are ready but the implementation rules for the rewrite phase still need to be defined.
+
+### Output layout
+
+Keep each use case as a small artifact pair in the same folder:
+
+```text
+docs/codebase/use-cases/
+   index.md
+   submit-order.md
+   submit-order.puml
+   approve-refund.md
+   approve-refund.puml
+```
+
+Prefer side-by-side markdown and `.puml` files over a separate event-storming folder.
 
 ## Gotchas
 
@@ -137,3 +144,9 @@ At this stage, branch creation is allowed, but implementation guidance is intent
 - [Knowledge normalization](./references/knowledge-normalization.md)
 - [Use-case extraction](./references/use-case-extraction.md)
 - [PlantUML event storming](./references/plantuml-event-storming.md)
+
+## Templates
+
+- [Use-case template](./templates/use-case.md)
+- [PlantUML event-storming starter](./templates/event-storming-starter.puml)
+- [Modernization readiness template](./templates/modernization-readiness.md)
