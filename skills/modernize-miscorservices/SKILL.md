@@ -59,12 +59,12 @@ Use the bundled templates for output shape and the reference files for the quali
 This skill sits in the middle of a staged modernization workflow.
 
 - `acquire-codebase-knowledge` — prerequisite companion skill. Use it first to populate the required seven-file baseline in `docs/codebase/`.
-- Planned DDD skill family — downstream companion skills. Use them after use cases and event-storming diagrams exist in `docs/codebase/use-cases/` to define foundations, aggregates, value objects, services, repositories, and domain events.
-- Planned hexagonal implementation skill — downstream companion skill. Use it after the domain model is clear to guide ports, adapters, package structure, and modernization code changes.
+- Internal DDD modules — load them after use cases and event-storming diagrams exist in `docs/codebase/use-cases/` to define foundations, aggregates, value objects, services, repositories, and domain events.
+- Internal hexagonal module — load it after the domain model is clear to guide ports, adapters, package structure, and modernization code changes.
 
 Companion skills help sequence the workflow, but they do not affect automatic skill discovery. Triggering still depends on this skill's frontmatter description.
 
-See [the DDD skill roadmap](./references/ddd-skill-roadmap.md) for the intended downstream skill split and the external source material that informs it.
+See [the DDD module roadmap](./references/ddd-skill-roadmap.md) for the intended internal module split and authoring order.
 
 ## Step-by-Step Workflows
 
@@ -100,11 +100,25 @@ Start from [the PlantUML starter template](./templates/event-storming-starter.pu
 1. Do not start implementation until phases 1 through 3 are complete.
 2. Create a dedicated git branch for modernization work only after the documentation baseline exists.
 3. Summarize candidate aggregates, ports, adapters, anti-corruption boundaries, and migration seams.
-4. Follow future skill references for DDD tactical design and hexagonal implementation rules when those instructions are added.
+4. Load only the internal module references and templates relevant to the stereotype currently being designed or implemented.
 
 Use [the modernization readiness template](./templates/modernization-readiness.md) for the phase 4 summary document.
 
 At this stage, branch creation is allowed, but implementation guidance is intentionally incomplete. If the user asks for code modernization before the later references exist, state that the documentation and branch setup are ready but the implementation rules for the rewrite phase still need to be defined.
+
+### Internal modules
+
+For modernization work, progressively load only the needed module references and templates:
+
+- `references/ddd-foundations.md`
+- `references/ddd-value-objects.md`
+- `references/ddd-aggregates.md`
+- `references/ddd-services.md`
+- `references/ddd-repositories.md`
+- `references/ddd-domain-events.md`
+- `references/hexagonal-architecture.md`
+
+Pair those references with the matching templates under `./templates/` when producing implementation-ready artifacts.
 
 ### Output layout
 
@@ -148,8 +162,18 @@ Prefer side-by-side markdown and `.puml` files over a separate event-storming fo
 - [PlantUML event storming](./references/plantuml-event-storming.md)
 - [DDD skill roadmap](./references/ddd-skill-roadmap.md)
 
+Additional internal module references live under `references/ddd-*.md` and `references/hexagonal-architecture.md`.
+
 ## Templates
 
 - [Use-case template](./templates/use-case.md)
 - [PlantUML event-storming starter](./templates/event-storming-starter.puml)
 - [Modernization readiness template](./templates/modernization-readiness.md)
+
+Additional stereotype templates live under:
+
+- `templates/value-objects/`
+- `templates/aggregates/`
+- `templates/services/`
+- `templates/repositories/`
+- `templates/domain-events/`
